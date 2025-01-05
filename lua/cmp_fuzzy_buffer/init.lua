@@ -74,7 +74,8 @@ source.regex = function(self, pattern)
 end
 
 source.get_keyword_pattern = function(self, params)
-  params.option = vim.tbl_deep_extend('keep', params.option, defaults)
+  params = params or {}
+  params.option = vim.tbl_deep_extend('keep', params.option or {}, defaults)
   if vim.api.nvim_get_mode().mode == 'c' then
     return string.format([=[.\{%d,}]=], params.option.min_match_length)
   else
@@ -83,7 +84,8 @@ source.get_keyword_pattern = function(self, params)
 end
 
 source.complete = function(self, params, callback)
-  params.option = vim.tbl_deep_extend('keep', params.option, defaults)
+  params = params or {}
+  params.option = vim.tbl_deep_extend('keep', params.option or {}, defaults)
   local is_cmd = (vim.api.nvim_get_mode().mode == 'c')
   -- in cmd mode we take all the line as a pattern
   local pattern = params.context.cursor_before_line:sub(params.offset)
